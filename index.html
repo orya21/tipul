@@ -10,22 +10,22 @@
             background: linear-gradient(135deg, #eef2f3 0%, #8e9eab 100%);
             color: #2c3e50;
             margin: 0;
-            padding: 6px;
+            padding: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             box-sizing: border-box;
-            overflow: hidden; /* חוסם גלילה לחלוטין */
+            overflow: hidden; /* מונע גלילה לחלוטין */
         }
 
         .container {
             width: 100%;
-            max-width: 100%; /* מנצל את כל רוחב האייפד */
-            height: 98vh; /* מנצל את מקסימום גובה המסך */
+            max-width: 1280px;
+            height: 96vh; /* ניצול גובה המסך */
             background: rgba(255, 255, 255, 0.95);
-            padding: 8px 12px;
-            border-radius: 16px;
+            padding: 12px 20px;
+            border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             display: flex;
             flex-direction: column;
@@ -34,9 +34,9 @@
         }
 
         h2 {
-            font-size: 1.2rem; /* הגדלת כותרת הסעיף */
-            margin: 0 0 4px 0;
-            border-right: 5px solid #ff6b6b;
+            font-size: 1.1rem;
+            margin: 0 0 8px 0;
+            border-right: 4px solid #ff6b6b;
             padding-right: 8px;
             text-align: right;
             color: #2f3542;
@@ -44,20 +44,20 @@
         
         #patient-title { border-right-color: #10ac84; }
 
-        /* שורת המטפלים - כפתורים גדולים וברורים יותר */
+        /* שורת המטפלים העליונה - גודל מקורי קומפקטי */
         .caregivers-grid {
             display: flex;
             justify-content: center;
             gap: 12px;
-            margin-bottom: 4px;
+            margin-bottom: 10px;
         }
 
         .circle-btn {
-            width: 76px; /* הגדלת עיגול המטפל */
-            height: 76px;
+            width: 75px;
+            height: 75px;
             border-radius: 50%;
             border: 3px solid #fff;
-            font-size: 1.25rem; /* טקסט מטפלים גדול בהרבה */
+            font-size: 1.1rem;
             font-weight: bold;
             color: white;
             cursor: pointer;
@@ -65,7 +65,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
             user-select: none;
         }
 
@@ -81,49 +81,7 @@
         .circle-btn.selected {
             transform: scale(1.05);
             border-color: #2ed573;
-            box-shadow: 0 4px 12px rgba(46, 213, 115, 0.4);
+            box-shadow: 0 5px 15px rgba(46, 213, 115, 0.4);
         }
 
-        /* גריד המטופלים - תופס את כל רוחב המסך ומגדיל את הכתב */
-        .patients-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 6px;
-            margin-bottom: 4px;
-            padding: 4px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border: 1px solid #e4e7eb;
-            flex-grow: 1;
-        }
-
-        .patient-btn {
-            background: #ffffff;
-            border: 1px solid #ced6e0;
-            padding: 8px 2px; /* אופטימיזציה לגובה */
-            font-size: 1.15rem; /* הגדלה משמעותית של שמות המטופלים! */
-            font-weight: bold; /* הפיכת הגופן למודגש וקריא */
-            border-radius: 8px;
-            cursor: pointer;
-            color: #2f3542;
-            transition: all 0.15s ease;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
-            user-select: none;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .patient-btn.selected {
-            background: linear-gradient(135deg, #e8f5e9, #c8e6c9) !important;
-            border-color: #2e7d32 !important;
-            color: #1b5e20 !important;
-            box-shadow: 0 2px 6px rgba(46, 125, 50, 0.2);
-        }
-
-        /* כפתורי פעולה ותיבת סטטוס */
-        .action-btn {
-            width: 100%;
-            padding: 14px;
-            font-size: 1.6rem; /* הגדלת טקסט כ
+        /* גריד המטופלים המקורי - 5 עמודות חוסך מק
