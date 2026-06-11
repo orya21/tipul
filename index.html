@@ -27,6 +27,8 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
             text-align: center;
             backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
         }
 
         h2 {
@@ -87,7 +89,7 @@
             grid-template-columns: repeat(4, 1fr);
             gap: 12px;
             margin-bottom: 30px;
-            max-height: 400px; 
+            height: 380px; /* קיבוע גובה כדי למנוע דריסת כפתורים */
             overflow-y: auto;
             padding: 10px;
             background: #f8f9fa;
@@ -118,6 +120,12 @@
         }
 
         /* כפתורי פעולה */
+        .action-container {
+            margin-top: 10px;
+            position: relative;
+            z-index: 10; /* מבטיח שהכפתורים תמיד יהיו מעל הכל ויהיה ניתן ללחוץ עליהם */
+        }
+
         .action-btn {
             width: 100%;
             padding: 22px;
@@ -206,4 +214,8 @@
             <button class="patient-btn" data-name="ליאור רובין">ליאור רובין</button>
             <button class="patient-btn" data-name="מאיר לוי">מאיר לוי</button>
             <button class="patient-btn" data-name="מיכל לוינה">מיכל לוינה</button>
-            <button class="patient-btn" data
+            <button class="patient-btn" data-name="נועה צפתי">נועה צפתי</button>
+            <button class="patient-btn" data-name="אחמד אטרש">אחמד אטרש</button>
+            <button class="patient-btn" data-name="ראובן פילו">ראובן פילו</button>
+            <button class="patient-btn" data-name="עדן עוזרי">עדן עוזרי</button>
+            <button class="patient-
