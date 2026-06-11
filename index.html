@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>עמדת רישום שירותים - גרסה יציבה</title>
+    <title>עמדת רישום שירותים - גרסה סופית ומלאה</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -94,7 +94,7 @@
             box-shadow: 0 8px 20px rgba(46, 213, 115, 0.4);
         }
 
-        /* גריד רחב ל-40 מטופלים (4 עמודות קבועות) */
+        /* גריד רחב לכל המטופלים מהתמונה */
         .patients-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -233,13 +233,12 @@
             <button class="patient-btn" data-name="פסטמן רחל">פסטמן רחל</button>
             <button class="patient-btn" data-name="אלינור בלילתי">אלינור בלילתי</button>
             <button class="patient-btn" data-name="ליר סגל">ליר סגל</button>
-            <button class="patient-btn" data-name="דניאל mזרחי">דניאל מזרחי</button>
+            <button class="patient-btn" data-name="דניאל מזרחי">דניאל מזרחי</button>
             <button class="patient-btn" data-name="לידור לוי">לידור לוי</button>
             <button class="patient-btn" data-name="נתנאל דרמוני">נתנאל דרמוני</button>
             <button class="patient-btn" data-name="אחמד ג'עבר">אחמד ג'עבר</button>
             <button class="patient-btn" data-name="מרים שמלה">מרים שמלה</button>
             <button class="patient-btn" data-name="שמעון אורי זעפרני">שמעון אורי זעפרני</button>
-            <button class="patient-btn" data-name="אחר">אחר</button>
         </div>
     </div>
 
@@ -250,14 +249,12 @@
 </div>
 
 <script>
-    // הקישור מגוגל שיטס שלך
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbycfAX29PaNE3Ia3EGmhTJM3CjveArvasBmJ-Q8CogWQJ-egTyOuPDGqLDfyuEDQhBxKw/exec";
+    // הקישור המדויק מתוך תמונת הפריסה שלך
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfybycfAX29PaNE3la3EGmhTJM3CjveArvasBmJ-Q8CogWQJ-egTyOuPDGqLDfyuEDQhBxKw/exec";
 
     let sessionData = { caregiver: "", patient: "", startTime: null, endTime: null };
 
-    // מנגנון האזנה חסין תקלות - מונע קפיאה של המסך בגלל גרשיים בשמות
     document.addEventListener("DOMContentLoaded", function() {
-        // האזנה למטפלים
         document.querySelectorAll('.circle-btn').forEach(function(btn) {
             btn.addEventListener('click', function() {
                 sessionData.caregiver = this.getAttribute('data-name');
@@ -267,7 +264,6 @@
             });
         });
 
-        // האזנה למטופלים
         document.querySelectorAll('.patient-btn').forEach(function(btn) {
             btn.addEventListener('click', function() {
                 sessionData.patient = this.getAttribute('data-name');
@@ -282,7 +278,6 @@
         const statusBox = document.getElementById('status-box');
         const startBtn = document.getElementById('btn-start');
         
-        // נעילה כפולה קשוחה: רק אם שניהם נבחרו, הכפתור הירוק ישתחרר
         if (sessionData.caregiver && sessionData.patient) {
             startBtn.disabled = false;
             startBtn.classList.add('ready');
