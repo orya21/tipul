@@ -27,8 +27,19 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
             text-align: center;
             backdrop-filter: blur(10px);
-            display: flex;
-            flex-direction: column;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin: 0 0 5px 0;
+            color: #1e3d59;
+        }
+
+        .subtitle {
+            color: #57606f;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            font-weight: 500;
         }
 
         h2 {
@@ -89,7 +100,7 @@
             grid-template-columns: repeat(4, 1fr);
             gap: 12px;
             margin-bottom: 30px;
-            height: 380px; /* קיבוע גובה כדי למנוע דריסת כפתורים */
+            max-height: 400px; 
             overflow-y: auto;
             padding: 10px;
             background: #f8f9fa;
@@ -120,12 +131,6 @@
         }
 
         /* כפתורי פעולה */
-        .action-container {
-            margin-top: 10px;
-            position: relative;
-            z-index: 10; /* מבטיח שהכפתורים תמיד יהיו מעל הכל ויהיה ניתן ללחוץ עליהם */
-        }
-
         .action-btn {
             width: 100%;
             padding: 22px;
@@ -178,6 +183,9 @@
 <body>
 
 <div class="container">
+    <h1>רישום טיפול בשירותים</h1>
+    <p class="subtitle">עמדת מעקב ובקרת זמנים - מצב אופקי</p>
+
     <div id="selection-screen">
         <h2>1. מי המטפל/ת?</h2>
         <div class="caregivers-grid">
@@ -218,4 +226,136 @@
             <button class="patient-btn" data-name="אחמד אטרש">אחמד אטרש</button>
             <button class="patient-btn" data-name="ראובן פילו">ראובן פילו</button>
             <button class="patient-btn" data-name="עדן עוזרי">עדן עוזרי</button>
-            <button class="patient-
+            <button class="patient-btn" data-name="זוהר כהן">זוהר כהן</button>
+            <button class="patient-btn" data-name="אולגה סורוקין">אולגה סורוקין</button>
+            <button class="patient-btn" data-name="נחמיאס ליאת">נחמיאס ליאת</button>
+            <button class="patient-btn" data-name="נופר מנצורי">נופר מנצורי</button>
+            <button class="patient-btn" data-name="פסטמן רחל">פסטמן רחל</button>
+            <button class="patient-btn" data-name="אלינור בלילתי">אלינור בלילתי</button>
+            <button class="patient-btn" data-name="ליר סגל">ליר סגל</button>
+            <button class="patient-btn" data-name="דניאל מזרחי">דניאל מזרחי</button>
+            <button class="patient-btn" data-name="לידור לוי">לידור לוי</button>
+            <button class="patient-btn" data-name="נתנאל דרמוני">נתנאל דרמוני</button>
+            <button class="patient-btn" data-name="אחמד ג'עבר">אחמד ג'עבר</button>
+            <button class="patient-btn" data-name="מרים שמלה">מרים שמלה</button>
+            <button class="patient-btn" data-name="שמעון אורי זעפרני">שמעון אורי זעפרני</button>
+        </div>
+    </div>
+
+    <button id="btn-start" class="action-btn" onclick="startCare()" disabled>▶ התחל טיפול (נכנסנו)</button>
+    <button id="btn-end" class="action-btn" onclick="endCare()">■ סיום טיפול (יוצאים)</button>
+
+    <div id="status-box">אנא בחר מטפל ומטופל כדי להתחיל.</div>
+</div>
+
+<script>
+    // הקישור המדויק מתוך תמונת הפריסה שלך
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfybycfAX29PaNE3la3EGmhTJM3CjveArvasBmJ-Q8CogWQJ-egTyOuPDGqLDfyuEDQhBxKw/exec";
+
+    let sessionData = { caregiver: "", patient: "", startTime: null, endTime: null };
+
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.circle-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                sessionData.caregiver = this.getAttribute('data-name');
+                document.querySelectorAll('.circle-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                checkSelections();
+            });
+        });
+
+        document.querySelectorAll('.patient-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                sessionData.patient = this.getAttribute('data-name');
+                document.querySelectorAll('.patient-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                checkSelections();
+            });
+        });
+    });
+
+    function checkSelections() {
+        const statusBox = document.getElementById('status-box');
+        const startBtn = document.getElementById('btn-start');
+        
+        if (sessionData.caregiver && sessionData.patient) {
+            startBtn.disabled = false;
+            startBtn.classList.add('ready');
+            statusBox.innerHTML = `🌟 <strong>מוכן!</strong> המטפל/ת <strong>${sessionData.caregiver}</strong> מוכן/ה להיכנס עם <strong>${sessionData.patient}</strong>.`;
+        } else if (sessionData.caregiver) {
+            startBtn.disabled = true;
+            startBtn.classList.remove('ready');
+            statusBox.innerText = "נבחר מטפל: " + sessionData.caregiver + ". כעת חובה לבחור מטופל.";
+        } else if (sessionData.patient) {
+            startBtn.disabled = true;
+            startBtn.classList.remove('ready');
+            statusBox.innerText = "נבחר מטופל: " + sessionData.patient + ". כעת חובה לבחור מטפל.";
+        }
+    }
+
+    function startCare() {
+        if (!sessionData.caregiver || !sessionData.patient) return;
+
+        sessionData.startTime = new Date();
+        
+        document.getElementById('selection-screen').style.display = 'none';
+        document.getElementById('btn-start').style.display = 'none';
+        document.getElementById('btn-end').style.display = 'block';
+        
+        const statusBox = document.getElementById('status-box');
+        statusBox.innerHTML = `⚠️ <strong>טיפול בעיצומו:</strong> ${sessionData.caregiver} מטפל/ת כעת ב-${sessionData.patient}`;
+        statusBox.classList.add('running-mode');
+    }
+
+    function endCare() {
+        sessionData.endTime = new Date();
+        document.getElementById('btn-end').style.display = 'none';
+        
+        const statusBox = document.getElementById('status-box');
+        statusBox.className = ""; 
+        statusBox.innerText = "🔄 שומר נתונים באקסל, אנא המתן...";
+
+        const durationMin = ((sessionData.endTime - sessionData.startTime) / 60000).toFixed(1);
+
+        const payload = {
+            caregiver: sessionData.caregiver,
+            patient: sessionData.patient,
+            startTime: sessionData.startTime.toLocaleString('he-IL'),
+            endTime: sessionData.endTime.toLocaleString('he-IL'),
+            duration: durationMin
+        };
+
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(() => {
+            statusBox.innerHTML = "🎯 <strong>הנתונים נשמרו בהצלחה!</strong> המסך יתאפס מיד.";
+            setTimeout(resetForm, 2000);
+        })
+        .catch(err => {
+            alert("שגיאה בתקשורת. נסה שנית.");
+            document.getElementById('btn-end').style.display = 'block';
+        });
+    }
+
+    function resetForm() {
+        sessionData = { caregiver: "", patient: "", startTime: null, endTime: null };
+        document.querySelectorAll('.circle-btn').forEach(btn => btn.classList.remove('selected'));
+        document.querySelectorAll('.patient-btn').forEach(btn => btn.classList.remove('selected'));
+        
+        const startBtn = document.getElementById('btn-start');
+        startBtn.disabled = true;
+        startBtn.classList.remove('ready');
+        
+        document.getElementById('selection-screen').style.display = 'block';
+        document.getElementById('btn-start').style.display = 'block'; 
+        document.getElementById('btn-end').style.display = 'none';
+        document.getElementById('status-box').innerText = "אנא בחר מטפל ומטופל כדי להתחיל.";
+    }
+</script>
+
+</body>
+</html>
