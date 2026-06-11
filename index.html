@@ -2,96 +2,49 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מערכת רישום טיפולים</title>
+    <title>מערכת טיפולים</title>
     <style>
-        body {
-            font-family: sans-serif;
-            background-color: #f0f2f5;
-            margin: 0;
-            padding: 10px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 600px;
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        h2 { font-size: 1.2rem; color: #333; margin-bottom: 10px; border-right: 4px solid #3498db; padding-right: 10px; }
-
-        .caregivers-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px; }
-        .circle-btn { width: 70px; height: 70px; border-radius: 50%; border: none; background: #3498db; color: white; font-weight: bold; cursor: pointer; }
-        .circle-btn.selected { background: #27ae60; border: 3px solid #1e8449; }
-
-        .patients-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-height: 300px; overflow-y: auto; padding: 5px; border: 1px solid #ddd; border-radius: 8px; }
-        .patient-btn { padding: 10px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer; font-size: 0.9rem; }
-        .patient-btn.selected { background: #d4edda; border-color: #28a745; }
-
-        .action-btn { width: 100%; padding: 15px; margin-top: 15px; border: none; border-radius: 10px; font-size: 1.2rem; font-weight: bold; color: white; cursor: pointer; }
-        #btn-start { background: #3498db; }
-        #btn-end { background: #e74c3c; display: none; }
-        #status { margin-top: 15px; padding: 10px; background: #eee; border-radius: 6px; text-align: center; }
+        body { font-family: Arial, sans-serif; background: #f4f4f9; padding: 10px; margin: 0; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 500px; background: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h2 { font-size: 1rem; margin-top: 15px; }
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+        button { padding: 8px; border: 1px solid #ccc; border-radius: 5px; background: white; cursor: pointer; }
+        .active { background: #4caf50; color: white; border-color: #3e8e41; }
+        .action { width: 100%; padding: 15px; margin-top: 15px; background: #2196f3; color: white; border: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div id="selection-screen">
-        <h2>מטפל:</h2>
-        <div class="caregivers-grid">
-            <button class="circle-btn" data-name="אלכס">אלכס</button>
-            <button class="circle-btn" data-name="ג'רי">ג'רי</button>
-            <button class="circle-btn" data-name="ליאור">ליאור</button>
-            <button class="circle-btn" data-name="עמונה">עמונה</button>
-            <button class="circle-btn" data-name="אמאני">אמאני</button>
-            <button class="circle-btn" data-name="האנדי">האנדי</button>
-        </div>
-
-        <h2>מטופל:</h2>
-        <div class="patients-grid">
-            <button class="patient-btn" data-name="רוני אלנתן">רוני</button>
-            <button class="patient-btn" data-name="שאול אטינגר">שאול</button>
-            <button class="patient-btn" data-name="נתנאל אנקרי">נתנאל</button>
-            <button class="patient-btn" data-name="דניאל שוורץ">דניאל</button>
-            <button class="patient-btn" data-name="איבן ציקנוב">איבן</button>
-            <button class="patient-btn" data-name="אדווה יוזרלביץ">אדווה</button>
-            <button class="patient-btn" data-name="אילן אזולאי">אילן</button>
-            <button class="patient-btn" data-name="ניר אבוטבול">ניר</button>
-        </div>
+    <h2>1. בחירת מטפל:</h2>
+    <div id="caregivers" class="grid">
+        <button onclick="select(this, 'c')">אלכס</button>
+        <button onclick="select(this, 'c')">ג'רי</button>
+        <button onclick="select(this, 'c')">ליאור</button>
+        <button onclick="select(this, 'c')">עמונה</button>
     </div>
 
-    <button id="btn-start" class="action-btn" onclick="startCare()">התחל טיפול</button>
-    <button id="btn-end" class="action-btn" onclick="endCare()">סיום טיפול</button>
-    <div id="status">אנא בחר מטפל ומטופל.</div>
+    <h2>2. בחירת מטופל:</h2>
+    <div id="patients" class="grid">
+        <button onclick="select(this, 'p')">רוני</button>
+        <button onclick="select(this, 'p')">שאול</button>
+        <button onclick="select(this, 'p')">נתנאל</button>
+        <button onclick="select(this, 'p')">דניאל</button>
+    </div>
+
+    <button class="action" onclick="finish()">סיום טיפול</button>
 </div>
 
 <script>
-    let s = { c: "", p: "", start: null };
-    document.querySelectorAll('.circle-btn').forEach(b => b.onclick = function() { 
-        document.querySelectorAll('.circle-btn').forEach(i => i.classList.remove('selected'));
-        this.classList.add('selected'); s.c = this.dataset.name; 
-    });
-    document.querySelectorAll('.patient-btn').forEach(b => b.onclick = function() { 
-        document.querySelectorAll('.patient-btn').forEach(i => i.classList.remove('selected'));
-        this.classList.add('selected'); s.p = this.dataset.name; 
-    });
-
-    function startCare() {
-        if(!s.c || !s.p) return alert("בחר מטפל ומטופל!");
-        s.start = new Date();
-        document.getElementById('btn-start').style.display = 'none';
-        document.getElementById('btn-end').style.display = 'block';
-        document.getElementById('status').innerText = s.c + " מטפל ב-" + s.p;
+    let data = {c: "", p: ""};
+    function select(btn, type) {
+        document.querySelectorAll(type == 'c' ? '#caregivers button' : '#patients button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        data[type] = btn.innerText;
     }
-
-    function endCare() {
-        alert("הטיפול הסתיים. נתוני זמן נשמרו.");
+    function finish() {
+        if(!data.c || !data.p) return alert("חסר מטפל או מטופל!");
+        alert("נשמר: " + data.c + " טיפל ב-" + data.p);
         location.reload();
     }
 </script>
