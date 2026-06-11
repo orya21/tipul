@@ -3,71 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>עמדת רישום שירותים - גרסה סופית ומלאה</title>
+    <title>עמדת רישום שירותים</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #eef2f3 0%, #8e9eab 100%);
             color: #2c3e50;
             margin: 0;
-            padding: 15px;
+            padding: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
             box-sizing: border-box;
+            overflow: hidden; /* מונע גלילה של כל המסך */
         }
 
         .container {
             width: 100%;
-            max-width: 1250px;
+            max-width: 1280px;
+            height: 96vh; /* מנצל כמעט את כל גובה המסך */
             background: rgba(255, 255, 255, 0.95);
-            padding: 25px 30px;
-            border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-            text-align: center;
-            backdrop-filter: blur(10px);
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            margin: 0 0 5px 0;
-            color: #1e3d59;
-        }
-
-        .subtitle {
-            color: #57606f;
-            margin-bottom: 25px;
-            font-size: 1.1rem;
-            font-weight: 500;
+            padding: 12px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* מחלק את הגובה בצורה שווה */
+            box-sizing: border-box;
         }
 
         h2 {
-            font-size: 1.4rem;
-            margin: 0 0 15px 0;
-            border-right: 6px solid #ff6b6b;
-            padding-right: 12px;
+            font-size: 1.1rem;
+            margin: 0 0 8px 0;
+            border-right: 4px solid #ff6b6b;
+            padding-right: 8px;
             text-align: right;
             color: #2f3542;
         }
         
         #patient-title { border-right-color: #10ac84; }
 
-        /* שורת המטפלים העליונה */
+        /* שורת המטפלים העליונה - קומפקטית יותר */
         .caregivers-grid {
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 12px;
+            margin-bottom: 10px;
         }
 
         .circle-btn {
-            width: 100px;
-            height: 100px;
+            width: 75px;
+            height: 75px;
             border-radius: 50%;
-            border: 4px solid #fff;
-            font-size: 1.2rem;
+            border: 3px solid #fff;
+            font-size: 1.1rem;
             font-weight: bold;
             color: white;
             cursor: pointer;
@@ -75,11 +65,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
             user-select: none;
         }
 
-        /* צבעים ייחודיים למטפלים */
+        /* צבעים למטפלים */
         .circle-btn[data-name="אלכס"] { background: linear-gradient(135deg, #3498db, #2980b9); }
         .circle-btn[data-name="ג'רי"] { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
         .circle-btn[data-name="ליאור"] { background: linear-gradient(135deg, #e67e22, #d35400); }
@@ -89,56 +79,58 @@
         .circle-btn[data-name="אחר"] { background: linear-gradient(135deg, #747d8c, #2f3542); }
 
         .circle-btn.selected {
-            transform: scale(1.1);
+            transform: scale(1.05);
             border-color: #2ed573;
-            box-shadow: 0 8px 20px rgba(46, 213, 115, 0.4);
+            box-shadow: 0 5px 15px rgba(46, 213, 115, 0.4);
         }
 
-        /* גריד רחב לכל המטופלים מהתמונה */
+        /* גריד רחב של 5 עמודות לכל המטופלים - בלי גלילה! */
         .patients-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 30px;
-            max-height: 400px; 
-            overflow-y: auto;
-            padding: 10px;
+            grid-template-columns: repeat(5, 1fr); /* 5 עמודות כדי לחסוך גובה */
+            gap: 6px;
+            margin-bottom: 10px;
+            padding: 5px;
             background: #f8f9fa;
-            border-radius: 15px;
+            border-radius: 12px;
             border: 1px solid #e4e7eb;
+            flex-grow: 1; /* נותן לגריד לנצל את מרב שטח המרכז */
         }
 
         .patient-btn {
             background: #ffffff;
             border: 1px solid #ced6e0;
-            padding: 15px 10px;
-            font-size: 1.1rem;
+            padding: 8px 4px; /* קומפקטי במיוחד לגובה */
+            font-size: 0.95rem;
             font-weight: 600;
-            border-radius: 12px;
+            border-radius: 8px;
             cursor: pointer;
             color: #2f3542;
             transition: all 0.15s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
             user-select: none;
             text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .patient-btn.selected {
             background: linear-gradient(135deg, #e8f5e9, #c8e6c9) !important;
             border-color: #2e7d32 !important;
             color: #1b5e20 !important;
-            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+            box-shadow: 0 3px 8px rgba(46, 125, 50, 0.2);
         }
 
         /* כפתורי פעולה */
         .action-btn {
             width: 100%;
-            padding: 22px;
-            font-size: 1.8rem;
+            padding: 14px;
+            font-size: 1.4rem;
             font-weight: bold;
             color: white;
             border: none;
-            border-radius: 15px;
+            border-radius: 12px;
             transition: all 0.3s ease;
         }
 
@@ -151,23 +143,23 @@
         #btn-start.ready { 
             background: linear-gradient(135deg, #2ecc71, #27ae60);
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.2);
         }
         
         #btn-end { 
             background: linear-gradient(135deg, #ff4757, #ff6b81);
             display: none;
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.3);
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.2);
         }
 
         /* תיבת סטטוס */
         #status-box {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 12px;
+            margin-top: 8px;
+            padding: 8px;
+            border-radius: 10px;
             background-color: #f1f2f6;
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: bold;
             color: #57606f;
             border: 2px dashed #ced6e0;
@@ -183,10 +175,7 @@
 <body>
 
 <div class="container">
-    <h1>רישום טיפול בשירותים</h1>
-    <p class="subtitle">עמדת מעקב ובקרת זמנים - מצב אופקי</p>
-
-    <div id="selection-screen">
+    <div id="selection-screen" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
         <h2>1. מי המטפל/ת?</h2>
         <div class="caregivers-grid">
             <button class="circle-btn" data-name="אלכס">אלכס</button>
@@ -242,14 +231,14 @@
         </div>
     </div>
 
-    <button id="btn-start" class="action-btn" onclick="startCare()" disabled>▶ התחל טיפול (נכנסנו)</button>
-    <button id="btn-end" class="action-btn" onclick="endCare()">■ סיום טיפול (יוצאים)</button>
-
-    <div id="status-box">אנא בחר מטפל ומטופל כדי להתחיל.</div>
+    <div>
+        <button id="btn-start" class="action-btn" onclick="startCare()" disabled>▶ התחל טיפול (נכנסנו)</button>
+        <button id="btn-end" class="action-btn" onclick="endCare()">■ סיום טיפול (יוצאים)</button>
+        <div id="status-box">אנא בחר מטפל ומטופל כדי להתחיל.</div>
+    </div>
 </div>
 
 <script>
-    // הקישור המדויק מתוך תמונת הפריסה שלך
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfybycfAX29PaNE3la3EGmhTJM3CjveArvasBmJ-Q8CogWQJ-egTyOuPDGqLDfyuEDQhBxKw/exec";
 
     let sessionData = { caregiver: "", patient: "", startTime: null, endTime: null };
@@ -350,7 +339,7 @@
         startBtn.disabled = true;
         startBtn.classList.remove('ready');
         
-        document.getElementById('selection-screen').style.display = 'block';
+        document.getElementById('selection-screen').style.display = 'flex';
         document.getElementById('btn-start').style.display = 'block'; 
         document.getElementById('btn-end').style.display = 'none';
         document.getElementById('status-box').innerText = "אנא בחר מטפל ומטופל כדי להתחיל.";
