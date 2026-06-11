@@ -10,7 +10,7 @@
             background: linear-gradient(135deg, #eef2f3 0%, #8e9eab 100%);
             color: #2c3e50;
             margin: 0;
-            padding: 8px;
+            padding: 6px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -21,10 +21,10 @@
 
         .container {
             width: 100%;
-            max-width: 1280px;
+            max-width: 100%; /* מנצל את כל רוחב האייפד */
             height: 98vh; /* מנצל את מקסימום גובה המסך */
             background: rgba(255, 255, 255, 0.95);
-            padding: 10px 15px;
+            padding: 8px 12px;
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             display: flex;
@@ -34,30 +34,30 @@
         }
 
         h2 {
-            font-size: 1rem;
-            margin: 0 0 5px 0;
-            border-right: 4px solid #ff6b6b;
-            padding-right: 6px;
+            font-size: 1.2rem; /* הגדלת כותרת הסעיף */
+            margin: 0 0 4px 0;
+            border-right: 5px solid #ff6b6b;
+            padding-right: 8px;
             text-align: right;
             color: #2f3542;
         }
         
         #patient-title { border-right-color: #10ac84; }
 
-        /* שורת המטפלים - צפופה וחסכונית */
+        /* שורת המטפלים - כפתורים גדולים וברורים יותר */
         .caregivers-grid {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 5px;
+            gap: 12px;
+            margin-bottom: 4px;
         }
 
         .circle-btn {
-            width: 68px;
-            height: 68px;
+            width: 76px; /* הגדלת עיגול המטפל */
+            height: 76px;
             border-radius: 50%;
             border: 3px solid #fff;
-            font-size: 1rem;
+            font-size: 1.25rem; /* טקסט מטפלים גדול בהרבה */
             font-weight: bold;
             color: white;
             cursor: pointer;
@@ -84,26 +84,26 @@
             box-shadow: 0 4px 12px rgba(46, 213, 115, 0.4);
         }
 
-        /* גריד המטופלים - צומצם לגובה מינימלי */
+        /* גריד המטופלים - תופס את כל רוחב המסך ומגדיל את הכתב */
         .patients-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 5px;
-            margin-bottom: 5px;
+            gap: 6px;
+            margin-bottom: 4px;
             padding: 4px;
             background: #f8f9fa;
             border-radius: 10px;
             border: 1px solid #e4e7eb;
-            flex-grow: 1; /* דוחף את הגריד לנצל את כל האמצע */
+            flex-grow: 1;
         }
 
         .patient-btn {
             background: #ffffff;
             border: 1px solid #ced6e0;
-            padding: 6px 2px; /* הכי קומפקטי שיש בגובה */
-            font-size: 0.9rem;
-            font-weight: 600;
-            border-radius: 6px;
+            padding: 8px 2px; /* אופטימיזציה לגובה */
+            font-size: 1.15rem; /* הגדלה משמעותית של שמות המטופלים! */
+            font-weight: bold; /* הפיכת הגופן למודגש וקריא */
+            border-radius: 8px;
             cursor: pointer;
             color: #2f3542;
             transition: all 0.15s ease;
@@ -125,95 +125,5 @@
         /* כפתורי פעולה ותיבת סטטוס */
         .action-btn {
             width: 100%;
-            padding: 12px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-        }
-
-        #btn-start { 
-            background-color: #a4b0be; 
-            cursor: not-allowed; 
-            display: block;
-        }
-        
-        #btn-start.ready { 
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.2);
-        }
-        
-        #btn-end { 
-            background: linear-gradient(135deg, #ff4757, #ff6b81);
-            display: none;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(255, 71, 87, 0.2);
-        }
-
-        #status-box {
-            margin-top: 5px;
-            padding: 6px;
-            border-radius: 8px;
-            background-color: #f1f2f6;
-            font-size: 0.95rem;
-            font-weight: bold;
-            color: #57606f;
-            border: 2px dashed #ced6e0;
-        }
-
-        .running-mode {
-            background: linear-gradient(135deg, #fff9db, #fff3cd) !important;
-            color: #856404 !important;
-            border: 2px solid #ffeeba !important;
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <div id="selection-screen" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
-        <h2>מטפל/ת:</h2>
-        <div class="caregivers-grid">
-            <button class="circle-btn" data-name="אלכס">אלכס</button>
-            <button class="circle-btn" data-name="ג'רי">ג'רי</button>
-            <button class="circle-btn" data-name="ליאור">ליאור</button>
-            <button class="circle-btn" data-name="עמונה">עמונה</button>
-            <button class="circle-btn" data-name="אמאני">אמאני</button>
-            <button class="circle-btn" data-name="האנדי">האנדי</button>
-            <button class="circle-btn" data-name="אחר">אחר</button>
-        </div>
-
-        <h2 id="patient-title">מטופל/ת:</h2>
-        <div class="patients-grid">
-            <button class="patient-btn" data-name="רוני אלנתן">רוני אלנתן</button>
-            <button class="patient-btn" data-name="שאול אטינגר">שאול אטינגר</button>
-            <button class="patient-btn" data-name="נתנאל אנקרי">נתנאל אנקרי</button>
-            <button class="patient-btn" data-name="דניאל שוורץ">דניאל שוורץ</button>
-            <button class="patient-btn" data-name="איבן ציקנוב">איבן ציקנוב</button>
-            <button class="patient-btn" data-name="אדווה יוזרלביץ">אדווה יוזרלביץ</button>
-            <button class="patient-btn" data-name="אילן אזולאי">אילן אזולאי</button>
-            <button class="patient-btn" data-name="ניר אבוטבול">ניר אבוטבול</button>
-            <button class="patient-btn" data-name="רועי מורלי">רועי מורלי</button>
-            <button class="patient-btn" data-name="תהילה זיגל">תהילה זיגל</button>
-            <button class="patient-btn" data-name="דניאלה ליפשיץ">דניאלה ליפשיץ</button>
-            <button class="patient-btn" data-name="הודיה מצליח">הודיה מצליח</button>
-            <button class="patient-btn" data-name="עמית חסאן">עמית חסאן</button>
-            <button class="patient-btn" data-name="ניר בן סימון">ניר בן סימון</button>
-            <button class="patient-btn" data-name="מיכאל גריבלט">מיכאל גריבלט</button>
-            <button class="patient-btn" data-name="דוד גרונברגר">דוד גרונברגר</button>
-            <button class="patient-btn" data-name="שמעון לוי">שמעון לוי</button>
-            <button class="patient-btn" data-name="סופי נחאס">סופי נחאס</button>
-            <button class="patient-btn" data-name="גלי מאירי">גלי מאירי</button>
-            <button class="patient-btn" data-name="ליאור רובין">ליאור רובין</button>
-            <button class="patient-btn" data-name="מאיר לוי">מאיר לוי</button>
-            <button class="patient-btn" data-name="מיכל לוינה">מיכל לוינה</button>
-            <button class="patient-btn" data-name="נועה צפתי">נועה צפתי</button>
-            <button class="patient-btn" data-name="אחמד אטרש">אחמד אטרש</button>
-            <button class="patient-btn" data-name="ראובן פילו">ראובן פילו</button>
-            <button class="patient-btn" data-name="עדן עוזרי">עדן עוזרי</button>
-            <button class="patient-btn" data-name="זוהר כהן">זוהר כהן</button>
-            <button class="patient-btn" data-name="אולגה סורוקין">אולגה סורוקין</button>
-            <button class="patient-btn" data-name="נחמיאס ליאת">נחמיאס לי
+            padding: 14px;
+            font-size: 1.6rem; /* הגדלת טקסט כ
